@@ -1,0 +1,128 @@
+{% extends "blog/base.html" %}
+{% load static%}
+ 
+
+{%block content%}
+
+<main id="main">
+
+  <!-- ======= Search Results ======= -->
+  <section id="search-result" class="search-result">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <h3 class="category-title"></h3>
+          {% for post in object_list %}
+          <div class="d-md-flex post-entry-2 small-img">
+            <a href="{% url 'full-article' post.slug %}" class="me-4 thumbnail">
+              {% if post.image %}
+                <img src="{{ post.image.url }}" height='400px' width='250px' alt="{{ post.title }}">
+              {% endif %}
+              
+            </a>
+            <div><br/><br/><br/><br/>
+              <div class="post-meta"><span class="date">{{post.name}}</span>  <span>{{post.publish}}</span></div>
+              <h3><a href="{% url 'full-article' post.slug %}"></a><b>{{post.title}}</b>   <br><div class="body">{{ post.body|safe|truncatechars:200}}</div> </a></h3>
+              {% comment %} <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p> {% endcomment %}
+              <div class="d-flex align-items-center author">
+                {% comment %} <div class="photo"><img src="{% static "assets/img/post-portrait-6.jpg" %} " alt="" class="img-fluid"></div> {% endcomment %}
+                {% comment %} <div class="name">
+                  <h3 class="m-0 p-0">Article by:{{post.author}}</h3>
+                </div> {% endcomment %}
+              </div>
+
+              <a href="{% url 'full-article' post.slug %}"><button type="button" class="btn btn-danger"> Read More</button></a>
+            </div>
+          </div>
+          {%endfor%}
+          <!-- Paging -->
+
+          {% if is_paginated%}
+          <div class="text-start py-4">
+            <div class="custom-pagination">
+           
+              {%if page_obj.has_previous %}
+              <button type="button" class="btn btn-info"> <a href="?page={{page_obj.previous_page_number}}" class="prev">Previous</a> </button>
+              {% endif %}
+            
+              {%if page_obj.has_next %}
+              <button type="button" class="btn btn-info"><a href="?page={{page_obj.next_page_number}}">Next</a></button>
+              {% endif %}
+            </div>
+          </div><!-- End Paging -->
+          {% endif %}
+        </div>
+
+        <div class="col-md-3">
+          <!-- ======= Sidebar ======= -->
+          {% comment %} <div class="aside-block">
+
+            <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Popular</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="false">Trending</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Latest</button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+
+              <!-- Popular -->
+              <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                <div class="post-entry-1 border-bottom">
+                  <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                  <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
+                  <span class="author mb-3 d-block">Jenny Wilson</span>
+                </div>
+
+               
+              </div> <!-- End Popular -->
+
+              <!-- Trending -->
+              <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
+                <div class="post-entry-1 border-bottom">
+                  <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                  <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2>
+                  <span class="author mb-3 d-block">Jenny Wilson</span>
+                </div>
+
+          
+              </div> <!-- End Trending -->
+
+              <!-- Latest -->
+              <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+                <div class="post-entry-1 border-bottom">
+                  <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                  <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2>
+                  <span class="author mb-3 d-block">Jenny Wilson</span>
+                </div>
+
+            
+              </div> <!-- End Latest -->
+
+            </div>
+          </div> {% endcomment %}
+
+
+          <div class="aside-block">
+             
+            <h3 class="aside-title">Catch up on our stories</h3>
+            <ul class="aside-tags list-unstyled">
+              {% for post in object_list %}
+              <li><a href="{% url 'full-article' post.slug %}">{{post.title}}</a></li>
+              {%endfor%}
+            </ul>
+          </div><!-- End Tags -->
+
+        </div>
+
+      </div>
+    </div>
+  </section> <!-- End Search Result -->
+
+</main><!-- End #main -->
+{% endblock %}
